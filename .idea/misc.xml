@@ -3,8 +3,13 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/ahmed/AndroidStudioProjects/InstaBugTask/app/src/main/res/font/aclonica.xml" value="0.26481481481481484" />
+        <entry key="..\:/Users/ahmed/AndroidStudioProjects/InstaBugTask/app/src/main/res/font/alatsi.xml" value="0.26481481481481484" />
+        <entry key="..\:/Users/ahmed/AndroidStudioProjects/InstaBugTask/app/src/main/res/layout/activity_details.xml" value="0.25" />
+        <entry key="..\:/Users/ahmed/AndroidStudioProjects/InstaBugTask/app/src/main/res/layout/activity_get.xml" value="0.25" />
         <entry key="..\:/Users/ahmed/AndroidStudioProjects/InstaBugTask/app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="..\:/Users/ahmed/AndroidStudioProjects/InstaBugTask/app/src/main/res/layout/activity_post.xml" value="0.25" />
+        <entry key="..\:/Users/ahmed/AndroidStudioProjects/InstaBugTask/app/src/main/res/layout/dialogue_view.xml" value="0.25" />
       </map>
     </option>
   </component>

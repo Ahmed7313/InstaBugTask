@@ -18,8 +18,11 @@ import javax.net.ssl.HttpsURLConnection
 
 object RequestHandler {
 
+    lateinit var resaultResponseCode : String
+    lateinit var resaultResponseBody : String
+    lateinit var resaultResponseHeader : String
 
-     fun getMethod(testUrl: String) : String {
+     fun getMethod(testUrl: String) {
         var prettyJson  = ""
         var responseHeader = ""
         var responseData = ""
@@ -51,12 +54,16 @@ object RequestHandler {
                 .append(response)
                 .append('\n')
                 .append(header).toString()
+            
+            resaultResponseCode = responseCode.toString()
+            resaultResponseBody = prettyJson
+            resaultResponseHeader = header
+
 
             Log.d("Pretty Printed JSON :", prettyJson)
         } else {
             Log.e("HTTPURLCONNECTION_ERROR", responseCode.toString())
         }
-        return responseHeader
     }
 
     private fun postMethod() {

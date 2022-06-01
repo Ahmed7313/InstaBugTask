@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">InstaBug Task</string>
+    <string name="api_test_app">Test Backed API</string>
 </resources>

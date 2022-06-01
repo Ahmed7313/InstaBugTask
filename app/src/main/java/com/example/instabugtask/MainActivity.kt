@@ -15,34 +15,23 @@ import java.net.URL
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var testedURL : EditText
-    private lateinit var response : TextView
-    private lateinit var testButton: Button
-    private lateinit var postButton: Button
-    private  var string: String = ""
 
-    var url : String = ""
+    private lateinit var getButton: Button
+    private lateinit var postButton: Button
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        testedURL = findViewById(R.id.url)
-        response = findViewById(R.id.response)
-        testButton = findViewById(R.id.test_btn)
-        postButton = findViewById(R.id.postviewbtn)
+        getButton = findViewById(R.id.getBtn)
+        postButton = findViewById(R.id.postBtn)
 
-        testButton.setOnClickListener {
-            url = testedURL.text.toString()
-            Thread({
-               string = getMethod(url)
-            }).start()
-
-            response.text = string
+        getButton.setOnClickListener {
+            val intent = Intent(this, GetActivity::class.java)
+            startActivity(intent)
         }
-
         postButton.setOnClickListener {
             val intent = Intent(this, PostActivity::class.java)
-            // start your next activity
             startActivity(intent)
         }
     }
