@@ -1,6 +1,8 @@
 package com.example.instabugtask.Network
 
+import android.content.Intent
 import android.util.Log
+import com.example.instabugtask.DetailsActivity
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonParser
 import org.json.JSONObject
@@ -22,7 +24,7 @@ object RequestHandler {
     lateinit var resaultResponseBody : String
     lateinit var resaultResponseHeader : String
 
-     fun getMethod(testUrl: String) {
+     fun getMethod(testUrl: String) : String {
         var prettyJson  = ""
         var responseHeader = ""
         var responseData = ""
@@ -64,43 +66,26 @@ object RequestHandler {
         } else {
             Log.e("HTTPURLCONNECTION_ERROR", responseCode.toString())
         }
+         return responseCode.toString()
     }
 
-    private fun postMethod() {
 
-        // Uncomment the one you want to test, and comment the others
-
-        //rawJSON()
-
-        // urlEncoded()
-
-        // formData()
-
-    }
-
-     fun <K, V> postMethod(jsonMap: Map<K, V>,requestPropertyMap: Map<K, V>, testUrl: String) : String{
-
-        var prettyJson  = ""
-        var responseHeader = ""
-        var responseData = ""
+     fun postMethod(testUrl : String) : String{
 
         // Create JSON using JSONObject
         val jsonObject = JSONObject()
-        for ((key, value) in jsonMap.entries) {
-            jsonObject.put(key.toString(), value.toString())
-        }
+        jsonObject.put("name", "Jack")
+        jsonObject.put("salary", "3540")
+        jsonObject.put("age", "23")
 
         // Convert JSONObject to String
-            val jsonObjectString = jsonObject.toString()
-            val url =URL(testUrl)
+        val jsonObjectString = jsonObject.toString()
+
+           val url =URL(testUrl)
             val httpURLConnection = url.openConnection() as HttpURLConnection
             httpURLConnection.requestMethod = "POST"
-        for ((key, value) in requestPropertyMap.entries) {
-            httpURLConnection.setRequestProperty(key.toString(), value.toString())
-        }
-        // The format of the content we're sending to the server
-            // httpURLConnection.setRequestProperty("Content-Type", "application/json") // The format of the content we're sending to the server
-            //httpURLConnection.setRequestProperty("Accept", "application/json") // The format of response we want to get from the server
+            httpURLConnection.setRequestProperty("Content-Type", "application/json") // The format of the content we're sending to the server
+            httpURLConnection.setRequestProperty("Accept", "application/json") // The format of response we want to get from the server
             httpURLConnection.doInput = true
             httpURLConnection.doOutput = true
 
@@ -115,23 +100,15 @@ object RequestHandler {
                 val response = httpURLConnection.inputStream.bufferedReader()
                     .use { it.readText() }  // defaults to UTF-8
 
+                    // Convert raw JSON to pretty JSON using GSON library
+                    val gson = GsonBuilder().setPrettyPrinting().create()
+                    val prettyJson = gson.toJson(JsonParser.parseString(response))
+                    Log.d("Pretty Printed JSON :", prettyJson)
 
-                var header = httpURLConnection.headerFields.entries.toString()
 
-                // Convert raw JSON to pretty JSON using GSON library
-                val gson = GsonBuilder().setPrettyPrinting().create()
-                prettyJson = gson.toJson(JsonParser.parseString(response))
-                responseHeader = StringBuilder()
-                    .append(responseCode.toString())
-                    .append('\n')
-                    .append(response)
-                    .append('\n')
-                    .append(header).toString()
-
-                Log.d("Pretty Printed JSON :", prettyJson)
             } else {
                 Log.e("HTTPURLCONNECTION_ERROR", responseCode.toString())
             }
-        return responseHeader
+        return responseCode.toString()
     }
 }

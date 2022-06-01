@@ -5,10 +5,8 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.Button
-import android.widget.EditText
-import android.widget.ProgressBar
-import android.widget.TextView
+import android.webkit.URLUtil
+import android.widget.*
 import com.example.instabugtask.Network.RequestHandler
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonParser
@@ -48,14 +46,21 @@ class GetActivity : AppCompatActivity() {
 //        getHeader = findViewById(R.id.getHeader)
 
         testButton.setOnClickListener {
-            progressBar.visibility = View.VISIBLE
-            url = testedURL.text.toString()
-            Thread({
-                getMethod(url)
-            }).start()
-//            getCode.text = resaultResponseCode
-//            getBody.text = resaultResponseBody
-//            getHeader.text = resaultResponseHeader
+            if (testedURL.text.isNotEmpty()){
+                if ( URLUtil.isValidUrl(testedURL.text.toString())){
+                    progressBar.visibility = View.VISIBLE
+                    url = testedURL.text.toString()
+                    Thread({
+                        getMethod(url)
+                    }).start()
+                }else{
+                    Toast.makeText(this, " Pleae enter a Valid URL", Toast.LENGTH_SHORT).show()
+
+                }
+
+            }else{
+                Toast.makeText(this, " Pleae enter The URL first to be able to test it", Toast.LENGTH_SHORT).show()
+            }
         }
 
     }

@@ -1,5 +1,6 @@
 package com.example.instabugtask
 
+import com.example.instabugtask.Network.RequestHandler
 import org.junit.Test
 
 import org.junit.Assert.*
@@ -10,8 +11,21 @@ import org.junit.Assert.*
  * See [testing documentation](http://d.android.com/tools/testing).
  */
 class ExampleUnitTest {
+
+
     @Test
-    fun addition_isCorrect() {
-        assertEquals(4, 2 + 2)
+    fun getRequest_withQUery_Parameters(){
+        val testUrl = "https://httpbin.org/get"
+
+        val responseCode = "200"
+        assertEquals(responseCode, RequestHandler.getMethod(testUrl));
+    }
+
+
+    @Test
+    fun PostRequest_Test(){
+        val testUrl = "https://httpbin.org/post"
+        val responseCode = "200"
+        assertEquals(responseCode, RequestHandler.postMethod(testUrl))
     }
 }

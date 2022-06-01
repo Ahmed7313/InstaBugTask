@@ -7,10 +7,12 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.view.Window
+import android.webkit.URLUtil
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ProgressBar
 import android.widget.Toast
+import com.example.instabugtask.database.ResponsesDbHelper
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonParser
 import org.json.JSONObject
@@ -43,6 +45,7 @@ class PostActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_post)
 
+        val dbHelper = ResponsesDbHelper(this)
 
         testPostButton = findViewById(R.id.test_btnpost)
         testePostdURL = findViewById(R.id.urlPost)
@@ -65,13 +68,23 @@ class PostActivity : AppCompatActivity() {
             showDialogBody()
         }
 
-        testPostButton.setOnClickListener {
-            progressBar.visibility = View.VISIBLE
-            url = testePostdURL.text.toString()
-            Thread({
-                postMethod(url)
-            }).start()
 
+        testPostButton.setOnClickListener {
+            if (testePostdURL.text.isNotEmpty()){
+                if ( URLUtil.isValidUrl(testePostdURL.text.toString())){
+                    progressBar.visibility = View.VISIBLE
+                    url = testePostdURL.text.toString()
+                    Thread({
+                        postMethod(url)
+                    }).start()
+                }else{
+                    Toast.makeText(this, " Pleae enter a Valid URL", Toast.LENGTH_SHORT).show()
+
+                }
+
+            }else{
+                Toast.makeText(this, " Pleae enter The URL first to be able to test it", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 
@@ -122,6 +135,8 @@ class PostActivity : AppCompatActivity() {
                 intent.putExtra("header", header)
                     this.startActivity(intent)
 
+
+
                 progressBar.visibility = View.INVISIBLE
 
             } else {
@@ -161,7 +176,7 @@ class PostActivity : AppCompatActivity() {
             requestPropertyMap.put(keyrequest, valuerequest)
 
 
-            Toast.makeText(this, "${bodyKey.text} Added", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "${bodyKey.text} : ${bodyvalue.text} Added", Toast.LENGTH_SHORT).show()
             bodyKey.text.clear()
             bodyvalue.text.clear()
         }
@@ -191,7 +206,7 @@ class PostActivity : AppCompatActivity() {
             jsonMap.put(keyjson, valuejson)
 
 
-            Toast.makeText(this, "${bodyKey.text} Added", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "${bodyKey.text} : ${bodyvalue.text} Added", Toast.LENGTH_SHORT).show()
             bodyKey.text.clear()
             bodyvalue.text.clear()
         }
